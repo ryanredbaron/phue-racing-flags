@@ -1,6 +1,6 @@
 import external.modified.irsdk as irsdk
 from enum import Enum
-
+import time
 
 class IRacingMemoryFlagType(Enum):
     # global flags
@@ -83,3 +83,45 @@ def get_flag() -> IRacingGUIFlagType:
 
     else:
         return IRacingGUIFlagType.IRACING_NO_FLAG
+
+while(True):
+    IRacingMemoryFlagType
+    IRacingGUIFlagType
+    memory_flags = []
+    gui_flags = []
+    ir = irsdk.IRSDK()
+    ir.startup()
+    session_flag = ir['SessionFlags']
+
+    if session_flag:
+        for flag in IRacingMemoryFlagType:
+            if IRacingMemoryFlagType(flag).value & session_flag == IRacingMemoryFlagType(flag).value:
+                memory_flags.append(flag)
+
+        if IRacingMemoryFlagType.blue in memory_flags:
+            gui_flags.append(IRacingGUIFlagType.IRACING_BLUE_FLAG)
+        if IRacingMemoryFlagType.repair in memory_flags:
+            gui_flags.append(IRacingGUIFlagType.IRACING_MEATBALL_FLAG)
+        if IRacingMemoryFlagType.black in memory_flags:
+            gui_flags.append(IRacingGUIFlagType.IRACING_BLACK_FLAG)
+        if IRacingMemoryFlagType.yellow in memory_flags:
+            gui_flags.append(IRacingGUIFlagType.IRACING_YELLOW_FLAG)
+        if IRacingMemoryFlagType.green in memory_flags:
+            gui_flags.append(IRacingGUIFlagType.IRACING_GREEN_FLAG)
+        if IRacingMemoryFlagType.white in memory_flags:
+            gui_flags.append(IRacingGUIFlagType.IRACING_WHITE_FLAG)
+        if IRacingMemoryFlagType.checkered in memory_flags:
+            gui_flags.append(IRacingGUIFlagType.IRACING_CHEQUERED_FLAG)
+        if IRacingMemoryFlagType.red in memory_flags:
+            gui_flags.append(IRacingGUIFlagType.IRACING_RED_FLAG)
+
+        if len(gui_flags) == 0 or len(gui_flags) > 1:
+            print(IRacingGUIFlagType.IRACING_NO_FLAG)
+        else:
+            print(gui_flags[0])
+
+    else:
+        print(IRacingGUIFlagType.IRACING_NO_FLAG)
+
+    time.sleep(1)
+    print("\033[H\033[J")
